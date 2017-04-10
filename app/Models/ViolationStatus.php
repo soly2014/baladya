@@ -17,6 +17,9 @@ class ViolationStatus extends Model implements Transformable {
     public $timestamps = false;
 
     public function violations(){
+
         return $this->hasMany(Violation::class,'violation_status_id');
+
     }
+    
 }

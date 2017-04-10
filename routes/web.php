@@ -106,11 +106,16 @@ Route::group(['prefix' => 'apis'], function ()
 
     Route::group(['prefix' => 'violations'], function () 
     {
+
         Route::post('get_violations', 'ApisController@get_violations');
         Route::post('add_violation', 'ApisController@add_violation');
         Route::post('add_violation_images', 'ApisController@add_violation_images');
         Route::post('add_violation_solution', 'ApisController@add_violation_solution');
         Route::post('get_single_violation', 'ApisController@get_single_violation');
+
+        Route::get('accepted', 'ApisController@get_accepted_violation');
+        Route::get('rejected', 'ApisController@get_rejected_violation');
+
         
     });
     
@@ -134,6 +139,39 @@ Route::group(['prefix' => 'apis'], function ()
     {
         Route::get('get_violation_types', 'ApisController@get_all_violation_types');
     });
+
+
+    /* post status ['accepted','regected'] */
+   Route::group(['prefix' => 'violation_status'], function () 
+    {
+        Route::post('add', 'ApisController@add_violation_status');
+    });
+
+
+    /* post solution  ['accepted','regected'] */
+   Route::group(['prefix' => 'solution_status'], function () 
+    {
+        Route::post('add', 'ApisController@add_solution_status');
+    });
+
+
+    /* search && delete violations */
+   Route::group(['prefix' => 'violations'], function () 
+    {
+        Route::post('search', 'ApisController@search_violations');
+        Route::post('delete', 'ApisController@delete_violation');
+    });
+
+
+
+    
+    /* return penalties */
+   Route::group(['prefix' => 'penalties'], function () 
+    {
+        Route::get('all', 'ApisController@get_penalties');
+    });
+
+
 
     
 

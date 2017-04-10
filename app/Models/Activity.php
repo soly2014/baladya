@@ -18,8 +18,9 @@ class Activity extends Model implements Transformable {
 
     public function healthenvtypes()
     {
-        # code...
+
         return $this->belongsToMany('App\Models\HealthEnvType','health_activity');
+
     }
 
 }

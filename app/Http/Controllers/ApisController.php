@@ -9,6 +9,7 @@ use App\Models\ViolationImage;
 use App\Models\Street;
 use App\Models\ResQuar;
 use App\Models\ViolationType;
+use DB;
 
 
 
@@ -98,6 +99,7 @@ class ApisController extends Controller
           
                     foreach($violation->solution as $solution)
                     {
+
                         $image=url('/').'/public'.$solution->image;
                         $solutions[] =[
                             'description'=>$solution->description,
@@ -111,7 +113,9 @@ class ApisController extends Controller
                     foreach($violation->images as $image)
                     {
                         $images[] =[
-                            'image'=>asset($image->image),               
+
+                            'image'=> url('/').'/public'.$image->image,  
+
                         ];
                     }
            
@@ -135,6 +139,7 @@ class ApisController extends Controller
                         'custom_penalty'=>$violation->custom_penalty,
                         'solutions'=>$solutions,
                         'images'=>$images
+                   
                     ];
                     
                   
@@ -362,7 +367,195 @@ class ApisController extends Controller
     }
     
 
+    /* START SEARCH VIOLATIONS */
 
+    public function search_violations(Request $request)
+     {
+
+            $content = $request->getContent();
+
+            $data = json_decode($content, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
+
+            $query = DB::table('violation')->select('*');
+
+            if ($data['square'] != '') {
+                
+                $query->where('res_quar_id',$data['square']);
+            }
+
+            if ($data['violation_type'] != '') {
+                
+                $query->where('violation_type_id',$data['violation_type']);
+            }
+
+                //dd($data['date'],$data['square']);
+            if ($data['date'] != '') {
+                $query->whereDate('date',$data['date']);
+            }
+
+
+            return response()->json($query->get());
+
+
+
+    }
+
+
+    /* END SEARCH VIOLATIONS */
+
+
+
+/*  GET PENALTIES */
+
+    public function get_penalties()
+    {
+         
+         $penalties = \App\Models\Penalty::all();
+
+         return response()->json(['message'=>$penalties]);
+    }
+
+/*  END GET PENALTIES*/
+
+
+
+
+
+    public function add_violation_status(Request $request)
+    {
+
+        $content = $request->getContent();
+
+        $data = json_decode($content, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
+
+
+        if (isset($data['violation_id']) && isset($data['status'])) {
+
+                if (\App\Models\Violation::find($data['violation_id'])) {
+
+                    $violation = \App\Models\Violation::find($data['violation_id']);
+                    $violation->is_accepted = $data['status'];
+                    $violation->reject_reasons = $data['reject_reasons'];
+
+                    if ($data['penalty_id'] != "") {
+                    $violation->penalty_id = $data['penalty_id'];
+                    }
+
+                    $violation->custom_penalty = $data['custom_penalty'];
+                    $violation->save();
+
+                    return response()->json(['message'=>'changed successfully']);
+
+
+                } else {
+
+                    return response()->json(['message'=>'No Violation found with this ID']);
+                }
+
+
+        } else {
+
+            return response()->json(['message'=>'complete your credentials pls']);
+        }
+
+    }
+
+
+
+
+        /* delete violation */
+
+            public function delete_violation(Request $request)
+            {
+                    $content = $request->getContent();
+
+                    $data = json_decode($content, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
+
+
+                    if (isset($data['violation_id'])) {
+
+                            if (\App\Models\Violation::find($data['violation_id'])) {
+
+                                    $Violation = \App\Models\Violation::find($data['violation_id']);
+                                    $Violation->delete();
+
+                               return response()->json(['message'=>'deleted successfully']);
+
+                                
+                            } else {
+
+                               return response()->json(['message'=>'not found violation ID']);
+                         
+                            }
+                            
+
+
+                    } else{
+
+                            return response()->json(['message'=>'please add violation_id']);
+                    }
+                
+            }
+
+        /* end delete violation */
+
+
+
+    public function add_solution_status(Request $request)
+    {
+
+        $content = $request->getContent();
+
+        $data = json_decode($content, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
+
+
+        if (isset($data['solution_id']) && isset($data['status'])) {
+
+                if (DB::table('violation_solutions')->where('id',$data['solution_id'])->first()) {
+
+                    DB::update('update violation_solutions set is_accepted = '.$data['status'].' where id = ?', [$data['solution_id']]);
+
+                    return response()->json(['message'=>'changed successfully']);
+
+
+                } else {
+
+                    return response()->json(['message'=>'No Solution found with this ID']);
+                }
+
+
+        } else {
+
+            return response()->json(['message'=>'complete your credentials pls']);
+        }
+
+    }
+
+
+
+
+
+//   get accepted violations
+
+    public function get_accepted_violation()
+    {
+        
+        $violations = \App\Models\Violation::where('is_accepted',1)->get();
+
+        return response()->json(['violations'=>$violations]);
+
+    }
+
+
+//  get rejected solution
+    public function get_rejected_violation()
+    {
+        
+        $violations = \App\Models\Violation::where('is_accepted',0)->get();
+
+        return response()->json(['violations'=>$violations]);
+
+    }
 
 
 
