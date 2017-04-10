@@ -112,13 +112,12 @@ class ApisController extends Controller
           
                     foreach($violation->images as $image)
                     {
-                        $images[] =[
+                        $images[] = url('/').'/public'.$image->image;
 
-                            'image'=> url('/').'/public'.$image->image,  
-
-                        ];
+                        
                     }
-           
+ 
+
                     $image=url('/').'/public'.$violation->image;
            
                     $all_violations[]= [
@@ -132,6 +131,7 @@ class ApisController extends Controller
                         'desc'=>$violation->desc, 
                         'long'=>$violation->long, 
                         'lat'=>$violation->lat,
+                        'violation_status_id'=>$violation->violation_status_id,
                         'video'=>asset($violation->video),
                         'voice'=>asset($violation->voice),
                         'image'=>$image,
@@ -606,6 +606,7 @@ class ApisController extends Controller
                 $image = url('/').'/public'.$violation->image;
 
                 $violation = [
+
                     'id' => $violation->id,
                     'date' => $violation->date,
                     'square' => $violation->resQuar->name,

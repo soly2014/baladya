@@ -11,6 +11,7 @@ class UserVisit extends Model implements Transformable {
     use TransformableTrait;
 
     protected $table = 'user_visit';
+
     protected $fillable = [
         'users_id',
         'res_quar_id',
@@ -19,6 +20,7 @@ class UserVisit extends Model implements Transformable {
         'facility_status_id',
         'date'
     ];
+
     public $timestamps = false;
 
     public function resQuar(){
@@ -27,11 +29,13 @@ class UserVisit extends Model implements Transformable {
 
     public function facility()
     {
-        return $this->belongsTo('App\Models\Facility');;
+        return $this->belongsTo('App\Models\Facility');
     }
 
     public function user()
     {
         return $this->belongsTo('App\Models\User','users_id');
     }
+
+    
 }

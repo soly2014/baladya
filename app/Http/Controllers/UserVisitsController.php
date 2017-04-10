@@ -108,10 +108,15 @@ class UserVisitsController extends Controller
         }
     }
 
+
+
+
+
     public function create()
     {
-        # code...
+
         $title = trans('uservisit.uservisit').'|'.trans('uservisit.create_uservisit');
+        
         $uservisits = UserVisit::where('date','=',date('m/d/Y'))->get();
         $users = Role::find(3)->users;
         $resquars = ResQuar::all();
@@ -121,6 +126,9 @@ class UserVisitsController extends Controller
 
         return view('userVisits.create',compact('uservisits','users','resquars','streets','facilities','facility_statuses','title'));
     }
+
+
+
 
     /**
      * Display the specified resource.
