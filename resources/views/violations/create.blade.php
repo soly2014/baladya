@@ -182,12 +182,6 @@
 
 
 
-<!-- dropzone -->
-
-
-
-<!-- dropzone -->
-
 
 	<div class="form-group">
 		<label class="col-sm-2 control-label">{{trans('street.map')}}</label>
@@ -212,12 +206,12 @@
 		<label class="p-r-small col-sm-1 control-label">{{trans('street.lat')}}</label>
 
 		<div class="col-sm-3">
-			<input type="text" class="form-control" style="width: 110px" id="us3-lat" name="latitude" value=""/>
+			<input type="text" class="form-control" style="width: 110px" id="us3-lat" name="latitude" value="24.632028"/>
 		</div>
 		<label class="p-r-small col-sm-2 control-label" style="margin-left:-9px;">{{trans('street.long')}}</label>
 
 		<div class="col-sm-3">
-			<input type="text" class="form-control" style="width: 110px" id="us3-lon" name="longitude" value=""/>
+			<input type="text" class="form-control" style="width: 110px" id="us3-lon" name="longitude" value="46.682558"/>
 		</div>
 	</div>
 	

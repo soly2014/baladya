@@ -53,18 +53,24 @@ class ViolationsController extends Controller
      */
     public function index()
     {
+
         $this->repository->pushCriteria(app('Prettus\Repository\Criteria\RequestCriteria'));
 
         $resQuarIds=array();
         foreach (Sentinel::getUser()->resQuars as $resQuar) {
             $resQuarIds[]=$resQuar->id;
         }
-        if(Sentinel::getUser()->roles[0]->slug =='admin'||Sentinel::getUser()->roles[0]->slug =='manager') {
+//dd($resQuarIds);
+
+        if(Sentinel::getUser()->roles[0]->slug =='admin' || Sentinel::getUser()->roles[0]->slug =='manager') {
+
             $violations = $this->repository->all();
         }
+
         elseif(Sentinel::getUser()->roles[0]->slug =='contra_moderator')  {
+
           $violations = Violation::whereIn('res_quar_id',$resQuarIds)->get();  
-          //  $violations = Violation::all();  
+
 
         }elseif(Sentinel::getUser()->roles[0]->slug =='moderator') {
             
@@ -78,6 +84,8 @@ class ViolationsController extends Controller
                 'data' => $violations,
             ]);
         }
+
+
         $title = trans('violation.violation');
         // dd($violations);
         return view('violations.index', compact('violations','title'));
@@ -126,8 +134,8 @@ class ViolationsController extends Controller
         // dd($request->all());
        $this->validate($request, [
            
-           'code'=>'required',
-           'custom_penalty'=>'required'
+         //  'code'=>'required',
+        //   'custom_penalty'=>'required'
        ]);
 
 
@@ -295,7 +303,7 @@ class ViolationsController extends Controller
 
             if($request->hasFile('images')){
                 $vimages = ViolationImage::where('violation_id','=',$violation->id)->get();
-                dd($vimages);
+//                dd($vimages);
                 foreach ($request->file('images') as $image) {
                     $imagePath =  parent::image_upload($image,$this->controllerName);
                     $vimage = new App\Models\ViolationImage();

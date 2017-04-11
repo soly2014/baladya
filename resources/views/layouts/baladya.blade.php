@@ -733,7 +733,9 @@ $("#us3").locationpicker({
     }
 });
 
+
             $("#find_btn").click(function (){
+
                 if ("geolocation" in navigator){
                         navigator.geolocation.getCurrentPosition(function(position){
                                 var map = new google.maps.Map(document.getElementById('us3'), {
