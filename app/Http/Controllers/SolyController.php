@@ -18,7 +18,7 @@ class SolyController extends Controller
     {
 
     	$id = $request->id;
-    	$streets = Street::where('res_quar_id',$id)->get();
+        $streets = Street::where('res_quar_id',$id)->get();
 
     	if (count($streets) > 0) {
     		
@@ -41,7 +41,7 @@ class SolyController extends Controller
          
          $image = $request->file('file');
          
-         $imageName = time().$image->getClientOriginalName();
+         $imageName = time().'::'.$image->getClientOriginalName();
           
          $targetDir =$_SERVER['DOCUMENT_ROOT'] .'/assets/images/Violations';
 
@@ -109,7 +109,35 @@ class SolyController extends Controller
     }
 
 
+/* CLEAR SESSION */
+public function clearSession(Request $request)
+{
 
+     $filename = $request->file;
+     $new_session = Session::get('violation_images');
+
+     foreach ($new_session as $key) {
+
+         if (explode('::', $key)[1] == $filename) {
+
+            if(($key = array_search($key, $new_session)) !== false) {
+
+                unset($new_session[$key]);
+
+            }
+
+         }
+     }
+
+     Session::set('violation_images',$new_session);
+     return Session::get('violation_images');
+
+}
 
 
 }
+
+
+
+
+

@@ -7,6 +7,11 @@ use App\Models\ResQuar;
 use App\Models\User;
 use App\Models\Violation;
 use Illuminate\Http\Request;
+use LaravelFCM\Message\OptionsBuilder;
+use LaravelFCM\Message\PayloadDataBuilder;
+use LaravelFCM\Message\PayloadNotificationBuilder;
+use FCM;
+
 
 class DashboardController extends Controller {
 
@@ -14,6 +19,15 @@ class DashboardController extends Controller {
     //
     public function index() {
     
+
+    $notificationBuilder = new PayloadNotificationBuilder();
+    $notificationBuilder->setTitle('title')
+                ->setBody('body')
+                ->setSound('sound')
+                ->setBadge('badge');
+
+$notification = $notificationBuilder->build();
+
       //  dd(\Session::get('type'));
         $users= User::all()->count();
         $violations = Violation::all()->count();

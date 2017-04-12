@@ -4,6 +4,8 @@
  Route::post('/add_image_violation','SolyController@addImageViolation');
  Route::post('/add_voice_violation','SolyController@addVoiceViolation');
  Route::post('/add_video_violation','SolyController@addVideoViolation');
+ Route::post('/image/clear_session','SolyController@clearSession');
+
 
 
 Route::get('user/login/{type}', 'HomeController@login')->name('login');
@@ -93,6 +95,9 @@ Route::group(['middleware' => 'web'], function () {
 
 
 
+
+
+
 /* START API */
 Route::group(['prefix' => 'apis'], function () 
 {
@@ -128,10 +133,12 @@ Route::group(['prefix' => 'apis'], function ()
     
 
 
+
     Route::group(['prefix' => 'squares'], function () 
     {
         Route::get('get_squares', 'ApisController@get_all_squares');
     });
+
 
     
     

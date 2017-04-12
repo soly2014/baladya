@@ -220,6 +220,9 @@ return [
         \L5Swagger\L5SwaggerServiceProvider::class,
         // l5-repository
         Prettus\Repository\Providers\RepositoryServiceProvider::class,
+        // FCM
+         LaravelFCM\FCMServiceProvider::class, 
+
 
     ],
 
@@ -276,7 +279,11 @@ return [
         'Sentinel'   => Cartalyst\Sentinel\Laravel\Facades\Sentinel::class,
         // jwt
         'JWTAuth' => Tymon\JWTAuth\Facades\JWTAuth::class,
-        'JWTFactory' => Tymon\JWTAuth\Facades\JWTFactory::class
+        'JWTFactory' => Tymon\JWTAuth\Facades\JWTFactory::class,
+        // FCM
+        'FCM'      => LaravelFCM\Facades\FCM::class,
+        'FCMGroup' => LaravelFCM\Facades\FCMGroup::class, // Optional
+
     ],
 
 ];

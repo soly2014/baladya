@@ -689,7 +689,7 @@
         <script src="{{url('/js/bootstrap-datepicker.js')}}"></script>
         <!-- Demo Settings -->
         <script src="{{ url('/js/neon-demo.js') }}"></script>
-        <script type="text/javascript" src='http://maps.google.com/maps/api/js?key=AIzaSyBBHC76XxD5oOGCIp2-Qww-9pBhZBrPQAQ&libraries=places'></script>
+        <script type="text/javascript" src='http://maps.google.com/maps/api/js?key=AIzaSyBHJJz2luNBtzPiJmuhW_A8nCKssvswzN8&libraries=places'></script>
         <script src="{{url('/js/locationpicker.jquery.min.js')}}"></script>
         <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 

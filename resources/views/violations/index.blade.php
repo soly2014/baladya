@@ -43,16 +43,35 @@
 					<div class="col-lg-3">
 					<a href="{{url('/admin/violation')}}/{{ $violation->id }}/solution" class="btn btn-success btn-sm btn-icon icon-left solve">
 							<i class="entypo-pencil"></i>
-							@if(session('user_role')!='moderator')
-								{{trans('violation.solve')}}
-							@else
-								{{trans('violation.show')}}								
-							@endif
+
+							<?php switch (session('user_role')) {
+
+								case 'moderator':
+									echo "عرض";
+									break;
+								
+								case 'manager':
+									echo "اداره";
+									break;
+
+								case 'contra_moderator':
+									echo "اضف حل";
+									break;
+								
+								case 'admin':
+									echo "اداره";
+									break;
+								
+								default:
+									echo "عرض";
+									break;
+							} ?>
+
 						</a>
 					</div>
 
 
-					@if(session("user_role")=='admin'||session("user_role")=='manager')
+					@if(session("user_role")=='admin' || session("user_role")=='manager')
 						<div class="col-lg-3">
 							<form method="post" action="{{url('admin/violation')}}/{{ $violation->id }}" class="FormDelete">
 							{{ method_field('DELETE') }}

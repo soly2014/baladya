@@ -109,13 +109,15 @@ class ViolationsController extends Controller
         $user_id = Session('user_object')->id;
         $user = App\Models\User::find($user_id);
         $resquars = App\Models\User::find($user_id)->resQuars;
+        $first_resq = $resquars[0]->id;
+        //dd($first_resq->id);
         $streets = App\Models\Street::all();
         $services = App\Models\Service::all();
         $violationtypes = App\Models\ViolationType::where('service_id',$user->service_id)->get();
         $violationstatuses = App\Models\ViolationStatus::all();
         $penalties = App\Models\Penalty::all();
 
-        return view('violations.create',compact('user','resquars','streets','services','violationtypes','violationstatuses','penalties','title'));
+        return view('violations.create',compact('user','first_resq', 'resquars','streets','services','violationtypes','violationstatuses','penalties','title'));
     }
 
 
@@ -367,7 +369,7 @@ class ViolationsController extends Controller
 
     public function saveSolution(Request $request)
     {
-//dd($request->all());
+
         $solution = new App\Solution($request->all());
         $solution->user_role = $request->user_role;
         $solution->save;

@@ -52,6 +52,16 @@
 		<label class="col-sm-3 control-label">{{trans('violation.street')}}</label>
 			<div class="col-sm-5">
 				<select name="street_id" id="Streets" class="select2" data-allow-clear="true" >
+<?php 
+
+        $streets = \App\Models\Street::where('res_quar_id',$first_resq)->get();
+
+
+?>
+
+			@foreach($streets as $street)
+				<option value="{{$street->id}}">{{$street->name}}</option>
+			@endforeach
 
 
 				</select>
@@ -182,12 +192,18 @@
 
 
 
+<!-- dropzone -->
+
+
+
+<!-- dropzone -->
+
 
 	<div class="form-group">
 		<label class="col-sm-2 control-label">{{trans('street.map')}}</label>
 		<div class="col-sm-5">
 			<input type="text" class="form-control" id="us3-address" name="address" value=""/>
-			<a href="javascript:;" id="find_btn" class="btn btn-default"><i class="entypo-compass"></i></a>
+			<button id="find_btn" class="btn btn-default"><i class="entypo-compass"></i></button>
 
 		</div>
 	</div>
@@ -304,14 +320,31 @@
 </script>
 <script>
 	
-	Dropzone.autoDiscover = false;
+Dropzone.autoDiscover = false;
 	jQuery(document).ready(function() {
 
 	  $("div#my-awesome-dropzone").dropzone({
-	    url: "/add_image_violation"
+	    url: "/add_image_violation",
+	    addRemoveLinks: true,
+	    removedfile: function(file) {
+		var name = file.name;
+
+		$.ajax({
+			type: "post",
+			url: "{{ url('/image/clear_session') }}",
+			data: { file: name },
+			dataType: 'html'
+		});
+
+		// remove the thumbnail
+		var previewElement;
+		return (previewElement = file.previewElement) != null ? (previewElement.parentNode.removeChild(file.previewElement)) : (void 0);
+	    },
+
 	  });
 
 	});
+
 
 </script>
 
@@ -322,7 +355,9 @@
 	jQuery(document).ready(function() {
 
 	  $("div#voice").dropzone({
-	    url: "/add_voice_violation"
+	    url: "/add_voice_violation",
+	    addRemoveLinks: true,
+
 	  });
 
 	});
@@ -336,7 +371,9 @@
 	jQuery(document).ready(function() {
 
 	  $("div#video").dropzone({
-	    url: "/add_video_violation"
+	    url: "/add_video_violation",
+	    addRemoveLinks: true,
+
 	  });
 
 	});

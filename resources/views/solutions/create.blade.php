@@ -5,11 +5,72 @@
 <hr />
 
 <br />
-@include('partials.entete', [
-'title' => trans('solution.create_solution'),
-'icon' => 'dashboard',
-'fil' =>  link_to('admin/solution', trans('solution.solution')) .'  /  '.  trans('solution.create_solution')
-])
+
+
+<div class="row">
+    <div class="col-lg-12">
+        <h1 class="page-header">
+            
+
+                            <?php switch (session('user_role')) {
+
+                                case 'moderator':
+                                    echo "عرض الحلول";
+                                    break;
+                                
+                                case 'manager':
+                                    echo "اداره";
+                                    break;
+
+                                case 'contra_moderator':
+                                    echo "اضافه حل";
+                                    break;
+                                
+                                case 'admin':
+                                    echo "اداره";
+                                    break;
+                                
+                                default:
+                                    echo "عرض";
+                                    break;
+                            } ?>
+
+        </h1>
+        <ol class="breadcrumb">
+            <li class="active">
+                <span class="fa fa-dashboard"></span> <a href="javascript:;">اداره الحلول</a> /
+                
+
+                            <?php switch (session('user_role')) {
+
+                                case 'moderator':
+                                    echo "عرض الحلول";
+                                    break;
+                                
+                                case 'manager':
+                                    echo "اداره";
+                                    break;
+
+                                case 'contra_moderator':
+                                    echo "اضافه حل";
+                                    break;
+                                
+                                case 'admin':
+                                    echo "اداره";
+                                    break;
+                                
+                                default:
+                                    echo "عرض";
+                                    break;
+                            } ?>
+
+
+            </li>
+        </ol>
+    </div>
+</div>
+
+
 
 <div class="row">
     <div class="col-md-12">
@@ -17,9 +78,12 @@
         <div class="panel panel-default panel-shadow" data-collapsed="0"><!-- to apply shadow add class "panel-shadow" -->
             <div class="panel-heading">
                 <div class="panel-title">
-                    {{trans('solution.violation')}}
+                    {{ trans('solution.violation') }}
                 </div>
             </div>
+
+
+
 
 
 
@@ -36,13 +100,13 @@
                     <input type="hidden" name="_token" value="{{ csrf_token() }}" />
 
 
-                    @if($violation->status['id'] == $statuses['new'] && session('user_role')!='manager')
+                    @if($violation->status['id'] == $statuses['new']   &&  session('user_role') != 'manager')
                     <div class="col-md-2" id='running'>
                         <input type="button" value="{{trans('violation.start')}}" class="change_status btn btn-primary" name="start_work"
                                status="{{$statuses['running']}}"/>
                     </div>                       
 
-                    @elseif($violation->status['id'] == $statuses['running'] && session('user_role')!='manager')
+                    @elseif($violation->status['id'] == $statuses['running']  &&  session('user_role') != 'manager')
                     <div class="col-md-2" id="waiting">
                         <input type="button" value="{{trans('violation.finish')}}" class="change_status btn btn-primary" name="waiting_work"
                                status="{{$statuses['waiting']}}"/>
@@ -385,11 +449,16 @@
         <div class="panel {{ $class }} panel-shadow" data-collapsed="0"><!-- to apply shadow add class "panel-shadow" -->
             <div class="panel-heading">
                 <div class="panel-title">
-                    @if(session('user_role')!='moderator')
+
+
+                    @if(session('user_role') != 'moderator'  )
                             {{trans('solution.singlesolution')}}</button>
                     @else
                             {{trans('solution.comment')}}
                     @endif
+
+
+
                 </div>
             </div>
             <!-- panel body -->
@@ -450,10 +519,13 @@
         <div class="panel panel-default panel-shadow" data-collapsed="0"><!-- to apply shadow add class "panel-shadow" -->
             <div class="panel-heading">
                 <div class="panel-title">
-                    @if(session('user_role')!='moderator')
-                                    {{trans('solution.create_solution')}}</button>
+<!-- admin -->
+                    @if(session('user_role') != 'moderator'  && session('user_role') != 'manager'  )
+
+                                    {{ trans('solution.create_solution') }}
+
                     @else
-                                    {{trans('solution.create_comment')}}
+                                    {{ trans('solution.create_comment') }}
                     @endif
                 </div>
             </div>
@@ -471,15 +543,17 @@
 
                         <div class="form-group">
                             <label for="field-4" class="col-sm-3 control-label">
-                            @if(session('user_role')!='moderator')
-                                     {{trans('solution.description')}}</button>
-                                @else
+                         
+
+                            @if(session('user_role')!='moderator'  && session('user_role')!='manager')
+                                     {{trans('solution.description')}}
+                            @else
                                     {{trans('solution.create_comment')}}
-                                @endif
+                            @endif
                            
                             </label>
                             <div class="col-sm-5">
-                                <input type="text" class="form-control" id="field-4" name="description" placeholder="Placeholder" value="{{ old('description') }}">
+                                <input type="text" class="form-control" id="field-4" name="description" placeholder="" value="{{ old('description') }}">
                                 @if ($errors->has('description'))
                                 <span class="help-block">
                                     <strong>{{trans('solution.required')}}</strong>
@@ -512,11 +586,13 @@
                         <div class="form-group">
                             <div class="col-sm-offset-3 col-sm-5">
                                 <button type="submit" id="applyFilter" class="btn btn-primary"><i class="entypo-login"></i>
-                                @if(session('user_role')!='moderator')
-                                    {{trans('solution.create_solution')}}
-                                @else
-                                    {{trans('solution.create_comment')}}
-                                @endif
+                    @if(session('user_role') != 'moderator'  && session('user_role') != 'manager'  )
+
+                                    {{ trans('solution.create_solution') }}
+
+                    @else
+                                    {{ trans('solution.create_comment') }}
+                    @endif
                                 </button>
                             </div>
                         </div>
