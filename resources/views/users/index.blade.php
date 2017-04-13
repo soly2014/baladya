@@ -41,14 +41,14 @@
 					<td>{{ $user->last_login }}</td>
 
 					<td>
-						<div class="col-lg-3">
+						<div class="col-lg-4">
 							<a href="{{url('/admin/users')}}/{{ $user->id }}" class="btn btn-warning btn-sm btn-icon icon-left">
 								<i class="entypo-eye"></i>
 								{{trans('dashboard.details')}}
 							</a>
 						</div>
 
-					<div class="col-lg-3">
+					<div class="col-lg-4">
 						<a href="{{url('/admin/users')}}/{{ $user->id }}/edit" class="btn btn-default btn-sm btn-icon icon-left">
 							<i class="entypo-pencil"></i>
 							{{trans('users.edit')}}
@@ -56,13 +56,13 @@
 						</div>
 
 
-						<div class="col-lg-3">
+						<div class="col-lg-4">
 						<form method="post" action="{{url('admin/users')}}/{{ $user->id }}" class="FormDelete">
 						{{ method_field('DELETE') }}
 						<input type="hidden" name="_token" value="{{ csrf_token() }}">
 						<button type="submit" class="btn btn-danger btn-sm btn-icon icon-left">
 						<i class="entypo-cancel"></i>
-						{{trans('users.delete')}}</button>
+						مسح</button>
 						</form>
 						</div>
 						

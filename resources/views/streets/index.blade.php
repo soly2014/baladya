@@ -11,7 +11,7 @@
 					<th data-hide="phone">{{trans('street.name')}}</th>
 					<th data-hide="phone">{{trans('street.description')}}</th>
 					<th data-hide="phone">{{trans('street.map')}}</th>
-					<th data-hide="phone">{{trans('street.status')}}</th>
+					<th data-hide="phone">الحى</th>
 					
 					
 					<th>{{trans('street.actions')}}</th>
@@ -23,7 +23,7 @@
 					<td>{{ $street->name }}</td>
 					<td>{{ $street->desc }}</td>
 					<td>{{ $street->map }}</td>
-					<td>{{ $street->status==1? trans('street.active'):trans('street.inactive') }}</td>
+					<td>{{ \App\Models\ResQuar::find($street->res_quar_id)->name  }}</td>
 					<td>
 					<div class="col-lg-2">
 						<a href="{{url('/admin/street')}}/{{ $street->id }}/edit" class="btn btn-default btn-sm btn-icon icon-left">

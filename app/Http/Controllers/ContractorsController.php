@@ -225,12 +225,20 @@ class ContractorsController extends Controller
     }
 
     
+
+
+
+
+
     public function getContractorRes($id)
     {
-        # code...
+
         $contractor = App\Models\User::findOrFail($id);
         $resids = $contractor->resQuars->pluck('id')->toArray();
         $resnames = $contractor->resQuars->pluck('name')->toArray();
+
         return response()->json(['ids'=>$resids , 'names'=>$resnames]);
     }
+
+
 }

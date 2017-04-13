@@ -69,13 +69,21 @@ class UsersController extends Controller
      */
     public function create()
     {
+
         $services = Service::all();
         $resQuars = ResQuar::all();
         $companies = Company::all();
         $contractors = Role::find(4)->users;
         $roles = Role::all();
+
+       $first_contractor = $contractors[0]->id;
+        $first_squars = User::find($first_contractor)->resQuars;
+
+        $li = view('soly.squ',compact('first_squars'))->render();
+
         $title = trans('users.users'). '|' .trans('users.create_user');
-        return view('users.create',compact('title','services','resQuars','roles','companies','contractors'));
+
+        return view('users.create',compact('title','li', 'services','resQuars','roles','companies','contractors'));
     }
 
 
@@ -92,18 +100,30 @@ class UsersController extends Controller
     {
 
         // dd($request->all());
+        $messages =[
 
+            'first_name.required'=>' الاسم الاول مطلوب ',
+            'code.required'=>' رقم الهويه مطلوب ',
+            'code.unique'=>' رقم الهويه موجود مسبقا ',
+            'last_name.required'=>' الاسم الخير مطلوب ',
+            'email.required'=>'  حقل البريد الالكتروني مطلوب',
+            'email.unique'=>' هذا البريد الالكترونى موجود مسبقا ',
+            'email.email'=>' هذا البريد غير صالح ',
+            'password.required'=>' كلمه المرور مطلوبه ',
+
+
+        ];
         $this->validate($request, [
 
             'code' => 'required|unique:users',
             'first_name' => 'required',
             'last_name' => 'required',
-            'email' => 'required',
+            'email' => 'required|email|unique:users',
             'password' => 'required',
             'role_id' => 'required',
             'service_id' => 'required',
 
-        ]);
+        ],$messages);
 
 
         try {
@@ -174,6 +194,7 @@ class UsersController extends Controller
      */
     public function show($id)
     {
+
         $services = Service::all();
         $resQuars = ResQuar::all();
         $roles = Role::all();
@@ -181,7 +202,12 @@ class UsersController extends Controller
         $contractors = Role::find(4)->users;
         $title = trans('contractor.contractor'). '|' .trans('dashboard.details');
         $view=1;
-        return view('users.edit', compact('user','contractors','title','view','services','resQuars','roles'));
+
+        $role_id = DB::table('role_user')->where('user_id',$user->id)->first()->role_id;
+        $role_name = \App\Models\Role::find($role_id)->name;
+        
+        return view('users.edit', compact('user','contractors','title','view','services','resQuars','role_name', 'roles'));
+
     }
 
 
@@ -197,6 +223,7 @@ class UsersController extends Controller
      */
     public function edit($id)
     {
+        
         $services = Service::all();
         $resQuars = ResQuar::all();
         $companies = Company::all();
@@ -205,6 +232,8 @@ class UsersController extends Controller
         $roles = Role::all();
         $user = $this->repository->find($id);
         $title = trans('contractor.contractor'). '|' .trans('users.update_user');
+
+
         return view('users.edit', compact('user','contractors','title','services','resQuars','roles','companies'));
     }
 
