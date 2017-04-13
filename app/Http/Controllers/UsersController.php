@@ -80,10 +80,11 @@ class UsersController extends Controller
         $first_squars = User::find($first_contractor)->resQuars;
 
         $li = view('soly.squ',compact('first_squars'))->render();
+        $lis = view('soly.squ',compact('resQuars'))->render();
 
         $title = trans('users.users'). '|' .trans('users.create_user');
 
-        return view('users.create',compact('title','li', 'services','resQuars','roles','companies','contractors'));
+        return view('users.create',compact('title','li','lis', 'services','resQuars','roles','companies','contractors'));
     }
 
 

@@ -131,7 +131,7 @@
 
 		<div class="col-sm-5">
 
-			<select name="contractor_id" class="select2" id='contractor'>
+			<select name="contractor_id" class="select2 lol" id='contractor'>
 
 				@foreach($contractors as $contractor)
 				<option value="{{$contractor->user_id}}" >{{$contractor->first_name.' '.$contractor->last_name}}</option>
@@ -177,62 +177,64 @@
 			<button type="submit" id="applyFilter" class="btn btn-primary">{{trans('users.create_user')}}</button>
 		</div>
 	</div>
-	<input type="hidden" name="fuck" id="fuck" value="{{ $li }}">
 
 
 </form>
 
+	<input type="hidden" name="fuck" id="fuck" value="{{ $li }}">
+	<input type="hidden" id="lis" value="{{ $lis }}">
+
+
+
 </div>
 </div>
 </div>
 
 </div>
 </div>
+<script type="text/javascript">
+	
+	$(document).ready({
+   $('body').on('change', '#contractor', function(){
+      console.log('changed');
+   });
+});
+
+</script>
+
 @stop
 
 @section('scripts')
+
+
+
+
+
 <script>
 
-	jQuery(document).ready(function($) {
+$(document).ready({
 
 
 
-		$('body').on('change','#role', function(event) {
+		$('body').on('change','#role',function(event) {
+
+			console.log('what two');
 			/* Act on the event */
 			if($('#role').val() == 5){
 
-				$('#selectcontractor').css('display', 'block');
+				//$('#selectcontractor').css('display', 'block');
 				var squares = $("#fuck").val();
-				console.log(squares);
 				$("#selectedres").html(squares);
 			}
 			else{
-				$('#selectcontractor').css('display', 'none');
-				$("#selectedres").val([]).trigger("change");
+				//$('#selectcontractor').css('display', 'none');
+				//$("#selectedres").val([]).trigger("change");
+				var non = $("#lis").val();
+			             $("#selectedres").html(non);
+
 			}
 		});
 
-
-
-		$('body').on('change','#contractor', function(event) {
-			
-			$.ajax({
-				url: '/admin/contractorres/'+$(this).val(),
-				type: 'GET',
-				dataType: 'JSON',
-			})
-			.done(function(response) {
-
-				$("#selectedres").val(response['ids']).trigger("change");
-			})
-			.fail(function() {
-				//console.log("error");
-			})
-			.always(function() {
-				//console.log("complete");
-			});
-			
-		});
 
 
 
@@ -241,15 +243,10 @@
 
 
 	});
-</script>
 
-<!-- 
-<script>
-	
-	$(document).ready(function () {
 		
-		$('body').on('change','#contractor',function () {
-			
+		$('body').on('change','#contractor',function (event) {
+			console.log('ji');
 			var id = this.value;
 
 			$.ajax({
@@ -259,11 +256,12 @@
 			    data:{'id':id},
 			    beforeSend:function () {
 
-			    	$('#Streets').html('loading....');
+			    	//$('#Streets').html('loading....');
 			    },
 			    success:function (data) {
 
-			    	if (data == 'false') {
+alert(data.view);
+/*			    	if (data == 'false') {
 
 			    	     $("#StreetsContainer").hide();
 			    	     $("#Streets").html('لا توجد شوارع لهذا الحي');
@@ -274,7 +272,7 @@
 			    	     $("select[name='street_id'").html(' ');		
 			    	     $("select[name='street_id'").html(data.view);		
 
-			    	}
+			    	}*/
 
 			    },
 			    error:function (errorres_quar_id) {
@@ -283,13 +281,10 @@
 
 			});
 		});
-	});
 
 </script>
  -->
-
-
-
+ 
 
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.2.1/jquery.form.min.js"></script>

@@ -33,8 +33,8 @@
         <link rel="stylesheet" href="{{url('/js/select2/select2-bootstrap.css')}}">
     <!-- dropzone css -->
 
-
         <script src="{{ url('/js/jquery-1.11.3.min.js') }}"></script>
+
 
         <link rel="stylesheet" href="{{url('/js/icheck/skins/minimal/_all.css')}}">
         <link rel="stylesheet" href="{{url('/js/icheck/skins/square/_all.css')}}">
@@ -43,7 +43,7 @@
         <link rel="stylesheet" href="{{('/js/icheck/skins/polaris/polaris.css')}}">
 
         <link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-        <script src="{{ url('/js/jquery-1.11.3.min.js') }}"></script>
+
 
 
 

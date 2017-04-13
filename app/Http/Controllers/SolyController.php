@@ -41,10 +41,13 @@ public function getLocation(Request $request)
         if ($request->ajax()) {
 
             $id = $request->id;
-            $squars = \App\Models\ResQuar::find($id);
 
-          //  return response()->json(['long'=>46.682558 , 'lat'=>24.632028]);
-            return response()->json(['long'=>$squars->long , 'lat'=>$squars->lat]);
+            $first_squars = User::find($id)->resQuars;
+
+            $li = view('soly.squ',compact('first_squars'))->render();
+
+
+            return response()->json(['view'=>$li ]);
         }
 
 }
