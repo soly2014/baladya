@@ -133,7 +133,7 @@ class ViolationsController extends Controller
     public function store(Request $request)
     {
 
-        // dd($request->all());
+       // dd($request->code);
        $this->validate($request, [
            
          //  'code'=>'required',
@@ -159,7 +159,7 @@ class ViolationsController extends Controller
             $violation->violation_type_id = $inputs['violation_type_id'];
 
             $violation->desc = $inputs['desc'];
-            $violation->code = $inputs['code'];
+            $violation->code = $inputs['code'] ?: 0;
 
             if(session('user_role')!='moderator')
             $violation->custom_penalty = $inputs['custom_penalty'];

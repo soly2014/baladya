@@ -55,10 +55,11 @@
 
 		
 
+
 		<div class="form-group">
 			<label class="col-sm-3 control-label">{{trans('street.squar')}}</label>
 				<div class="col-sm-5">
-					<select name="res_quar_id" class="selectboxit">
+					<select name="res_quar_id" class="selectboxit" id="squarOne">
 						
 						@foreach($resquars as $resquar)
 							<option value="{{ $resquar->id }}">{{ $resquar->name }}</option>
@@ -67,6 +68,7 @@
 					</select>
 				</div>
 		</div>
+
 
 
           <div class="form-group">
@@ -87,7 +89,13 @@
                   <input type="text" class="form-control" name="radius" id="us3-radius" />
               </div>
           </div>
+
+
+
           <div id="us3" style="width: 550px; height: 400px;"></div>
+
+
+
           <div class="clearfix">&nbsp;</div>
           <div class="m-t-small">
               <label class="p-r-small col-sm-1 control-label">{{trans('street.lat')}}</label>
@@ -119,4 +127,150 @@
 </div>
 
 
+
+
+
+
+
+
+
+
+<script>
+	
+
+
+	$(document).ready(function () {
+		
+
+
+		    long = '{{ $resquars->first()->long }}';	
+		    lat    = '{{ $resquars->first()->lat }}';	
+
+		     var data ={'lat':parseFloat(lat),'long':parseFloat(long)}; 
+
+
+                               var map = new google.maps.Map(document.getElementById('us3'), {
+	                                    zoom: 13,
+	                                    center: {lat: data.lat, lng: data.long}
+                                });
+
+                                infoWindow = new google.maps.InfoWindow({map: map});
+                                var pos = {lat: data.lat, lng: data.long};
+                                $("#us3-lat").val(data.lat);
+                                $("#us3-lon").val(data.long);
+
+                                var geocoder = new google.maps.Geocoder();
+                                var latLng = new google.maps.LatLng(data.lat,data.long);
+
+			new google.maps.Marker({
+			        position: pos,
+			        map: map
+			    });
+
+                             if (geocoder) {
+                                geocoder.geocode({ 'latLng': latLng}, function (results, status) {
+                                   if (status == google.maps.GeocoderStatus.OK) {
+                                       $("#us3-address").val(results[0].formatted_address);
+                                   }
+                                   else {
+                                       $('#us3-address').val('Geocoding failed: '+status);
+                                   }
+                                }); 
+                            }
+
+
+
+
+		$('body').on('change','#squarOne',function () {
+			
+			var id = this.value;
+
+			$.ajax({
+
+			    url:'{{ url('district/location') }}',
+			    type:'get',
+			    data:{'id':id},
+			    beforeSend:function () {
+
+			    	//$('#Streets').html('loading....');
+			    },
+			    success:function (data) {
+
+		     var data ={'lat':parseFloat(data.lat),'long':parseFloat(data.long)}; 
+
+
+                               var map = new google.maps.Map(document.getElementById('us3'), {
+	                                    zoom: 13,
+	                                    center: {lat: data.lat, lng: data.long}
+                                });
+
+                                infoWindow = new google.maps.InfoWindow({map: map});
+                                var pos = {lat: data.lat, lng: data.long};
+                                $("#us3-lat").val(data.lat);
+                                $("#us3-lon").val(data.long);
+
+                                var geocoder = new google.maps.Geocoder();
+                                var latLng = new google.maps.LatLng(data.lat,data.long);
+
+			new google.maps.Marker({
+			        position: pos,
+			        map: map
+			    });
+
+                             if (geocoder) {
+                                geocoder.geocode({ 'latLng': latLng}, function (results, status) {
+                                   if (status == google.maps.GeocoderStatus.OK) {
+                                       $("#us3-address").val(results[0].formatted_address);
+                                   }
+                                   else {
+                                       $('#us3-address').val('Geocoding failed: '+status);
+                                   }
+                                }); 
+                            }
+
+                                // infoWindow.setPosition(pos);
+                                // map.panTo(pos);
+
+
+
+/*			    	if (data == 'false') {
+
+			    	     $("#StreetsContainer").hide();
+			    	     $("#Streets").html('لا توجد شوارع لهذا الحي');
+
+			    	} else {
+
+			    	     $("#StreetsContainer").show();
+			    	     $("select[name='street_id'").html(' ');		
+			    	     $("select[name='street_id'").html(data.view);		
+
+			    	}
+*/
+			    },
+			    error:function (errorres_quar_id) {
+			    	alert('error in servers, please try again later');
+			    }	
+
+			});
+		});
+	});
+
+</script>
+
+<!--  editing map -->
+
+<script type="text/javascript">
+	
+
+
+
+        
+
+
+
+
+
+</script>
+
+<!-- end editing map -->
 @stop

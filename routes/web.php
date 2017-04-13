@@ -195,4 +195,5 @@ Route::group(['prefix' => 'apis'], function ()
 
     /* START ADDING BY SOLY */
     Route::get('district/streets','SolyController@getStreets');
+    Route::get('district/location','SolyController@getLocation');
     /* END ADDING BY SOLY */

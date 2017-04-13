@@ -457,7 +457,51 @@
                 }, 3000);
                 </script>
                 @endif
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                 @yield('content')
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
                 <footer class="main">
@@ -768,7 +812,11 @@ $("#us3").locationpicker({
                     }else{
                         console.log("Browser doesn't support geolocation!");
                 }
+
+
+                
             });
+
 
 
 $(document).ready(function () {

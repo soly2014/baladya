@@ -109,7 +109,7 @@
 	<div class="form-group">
 		<label for="field-4" class="col-sm-3 control-label">{{trans('violation.code')}}</label>
 		<div class="col-sm-5">
-			<input type="text" class="form-control" id="field-4" name="code" placeholder="{{trans('violation.code')}}" value="{{ old('code') }}">
+			<input type="number" id="code_one" class="form-control" id="field-4" name="code" placeholder="{{trans('violation.code')}}" value="{{ old('code') }}">
 			@if ($errors->has('code'))
             <span class="error">
                 <strong>{{trans('violation.code')}}</strong>
@@ -126,7 +126,7 @@
 		<div class="col-sm-5">
 			{{-- <input type="text" class="form-control" id="field-4" name="desc" placeholder="Placeholder" value="{{ old('desc') }}"> --}}
 
-			<textarea name="desc" class="form-control" id="field-4" placeholder="{{trans('violation.desc')}}">{{ old('desc') }}</textarea>
+			<textarea id="desc_one" name="desc" class="form-control" id="field-4" placeholder="{{trans('violation.desc')}}">{{ old('desc') }}</textarea>
 			@if ($errors->has('desc'))
             <span class="error">
                 <strong>{{trans('violation.desc')}}</strong>
@@ -203,7 +203,7 @@
 		<label class="col-sm-2 control-label">{{trans('street.map')}}</label>
 		<div class="col-sm-5">
 			<input type="text" class="form-control" id="us3-address" name="address" value=""/>
-			<button id="find_btn" class="btn btn-default"><i class="entypo-compass"></i></button>
+			<a id="find_btn" href="javascript:;" class="btn btn-default"><i class="entypo-compass"></i></a>
 
 		</div>
 	</div>
@@ -400,6 +400,23 @@ Dropzone.autoDiscover = false;
              
             $('#applyFilter').html('اضافه  مخالفه');
             $('#productEditErrors').html('<div class="alert alert-success">تمت الاضافه بنجاح</div>'); //appending to a <div id="form-errors"></div> inside form
+            Dropzone.forElement("#my-awesome-dropzone").removeAllFiles(true);
+            Dropzone.forElement("#voice").removeAllFiles(true);
+            Dropzone.forElement("#video").removeAllFiles(true);
+           //  $("#formID").reset();
+           $("#code_one").val("");
+           $("#desc_one").val("");
+
+<?php 
+
+      $arr = [];
+      Session::set('violation_images', $arr);
+      Session::set('violation_video', '');
+      Session::set('violation_voice', '');
+
+
+ ?>
+
 
         },
         error: function(error) {

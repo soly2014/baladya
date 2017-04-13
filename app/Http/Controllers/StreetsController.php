@@ -33,6 +33,7 @@ class StreetsController extends Controller
     }
 
 
+
     /**
      * Display a listing of the resource.
      *
@@ -40,6 +41,24 @@ class StreetsController extends Controller
      */
     public function index()
     {
+
+/*        $fuck = \App\Models\ResQuar::where('long',null)->orWhere('long',0)->get();
+        foreach ($fuck as $key) {
+            $var = \App\Models\ResQuar::find($key->id);
+            $var->long = 46.682558;
+            $var->save();
+
+        }
+
+        $fuck = \App\Models\ResQuar::where('lat',null)->orWhere('lat',0)->get();
+        foreach ($fuck as $key) {
+            $var = \App\Models\ResQuar::find($key->id);
+            $var->lat = 24.632028;
+            $var->save();
+
+        }
+*/
+
         $this->repository->pushCriteria(app('Prettus\Repository\Criteria\RequestCriteria'));
         $streets = $this->repository->all();
 
