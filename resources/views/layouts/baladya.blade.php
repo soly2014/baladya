@@ -33,7 +33,9 @@
         <link rel="stylesheet" href="{{url('/js/select2/select2-bootstrap.css')}}">
     <!-- dropzone css -->
 
-        <script src="{{ url('/js/jquery-1.11.3.min.js') }}"></script>
+<!--         <script src="{{ url('/js/jquery-1.11.3.min.js') }}"></script>
+ -->
+        <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
 
 
         <link rel="stylesheet" href="{{url('/js/icheck/skins/minimal/_all.css')}}">
@@ -59,6 +61,9 @@
         <script src="{{ url('/js/jvectormap/jquery-jvectormap-europe-merc-en.js') }}"></script>
         <script src="{{ url('/js/jvectormap/jquery-jvectormap-world-mill-en.js') }}"></script>
         <script src="{{ url('/js/select2/select2.min.js') }}"></script>
+    <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js">
+        
+    </script>
        
 
 
@@ -703,8 +708,9 @@
         <!-- Bottom scripts (common) -->
         <script src="{{ url('/js/gsap/TweenMax.min.js') }}"></script>
         <script src="{{ url('/js/jquery-ui/js/jquery-ui-1.10.3.minimal.min.js') }}"></script>
-        <script src="{{ url('/js/bootstrap.js') }}"></script>
-        <script src="{{ url('/js/joinable.js') }}"></script>
+<!--         <script src="{{ url('/js/bootstrap.js') }}"></script>
+ -->
+         <script src="{{ url('/js/joinable.js') }}"></script>
         <script src="{{ url('/js/resizeable.js') }}"></script>
         <script src="{{ url('/js/neon-api.js') }}"></script>
         <script src="{{ url('/js/bootstrap-switch.min.js') }}"></script>
@@ -739,6 +745,14 @@
 
         <script src="{{url('/js/jquery.peity.min.js')}}"></script>
         <script src="{{url('/js/neon-charts.js')}}"></script>
+
+
+
+
+    
+
+
+
 
         <script>
 
@@ -849,8 +863,12 @@ $(document).ready(function () {
 
 
         <script type="text/javascript">
+
+
             $(".FormDelete").submit(function (event) {
+
                 var x = confirm('هل أنت متأكد؟');
+
                 if (x) {
                     return true;
                 } else {
@@ -945,7 +963,7 @@ $(document).ready(function () {
 
         $('.modal').on('click', function(event) {
             /* Act on the event */
-            modal.css('display','none');
+           // modal.css('display','none');
         });
 
         
@@ -954,6 +972,12 @@ $(document).ready(function () {
  
         
         </script>
+
+
+
+
+
+
 
        
     </body>

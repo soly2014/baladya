@@ -309,6 +309,8 @@ class UsersController extends Controller
      */
     public function update(Request $request, $id)
     {
+
+
         $this->validate($request, [
             'code' => 'required',
             'first_name' => 'required',
@@ -318,8 +320,12 @@ class UsersController extends Controller
 
         ]);
 
+        
         try {
+        
             $input=$request->all();
+        
+        
             if($request->has('password')){
                 $input['password']=bcrypt($request->get('password'));
             }
@@ -332,21 +338,29 @@ class UsersController extends Controller
 
             DB::table('res_quar_user')->where('user_id','=',$userObj->id)->delete();
 
+        
             if($request->has('resQuars')) {
                 $userObj->resQuars()->detach($request->get('resQuars'));
                 $userObj->resQuars()->attach($request->get('resQuars'));
             }
+        
+
             $response = [
                 'message' => trans('contractor.updated'),
                 'data'    => $user->toArray(),
             ];
 
+        
             if ($request->wantsJson()) {
 
                 return response()->json($response);
             }
+        
+
             Session::flash('success',trans('dashboard.updated'));
             return redirect()->back()->with('ok', $response['message']);
+        
+
         } catch (ValidatorException $e) {
 
             if ($request->wantsJson()) {

@@ -38,6 +38,7 @@ class User extends CartalystUser {
      */
     protected $hidden = ['password', 'remember_token'];
 
+
     /**
      * One to Many relation
      *
