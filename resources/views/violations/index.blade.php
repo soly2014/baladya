@@ -12,7 +12,7 @@
 					<th data-hide="phone">{{trans('violation.code')}}</th>
 					<th data-hide="phone">{{trans('violation.custom_penalty')}}</th>
 					<th data-hide="phone">{{trans('violation.violation_status')}}</th>
-					<th data-hide="phone">اسم الحي</th>
+					<th data-hide="phone">اسم المقاول</th>
 					<th>{{trans('violation.actions')}}</th>
 					
 				</tr>
@@ -30,12 +30,27 @@
 					</td>
 					<td>
 
-					@if($violation->user_id)
 
-					@if(App\Models\ResQuar::where('id','=',$violation->res_quar_id)->first())
-						{{App\Models\ResQuar::where('id','=',$violation->res_quar_id)->first()->name }}
-					@endif
-					@endif
+					<?php
+					$user = \App\Models\User::find($violation->seen_by);
+
+					if ($user) {
+					$user = $user->contractor_id;
+
+					$user = \App\Models\User::find($user);
+
+						if(\App\Models\User::where('id','=',$user->id)->first()){
+							$name = \App\Models\User::where('id','=',$user->id)->first()->first_name.' '.App\Models\User::where('id','=',$user->id)->first()->last_name ;
+						}
+					}else {
+
+							$name = '--------';
+						}
+
+					
+					 ?>
+					 {{ $name }}
+
 
 					</td>
 					

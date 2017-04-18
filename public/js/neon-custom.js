@@ -1345,6 +1345,25 @@ var public_vars = public_vars || {};
 		// End of: Added on v1.1
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 		// Added on v1.1.4
 		$(".input-spinner").each(function(i, el)
 		{
@@ -1359,8 +1378,32 @@ var public_vars = public_vars || {};
 				min = attrDefault($input, 'min', null),
 				max = attrDefault($input, 'max', null);
 
+			/* button one */
+			$this.find('.button_one').on('click', function(ev)
+			{
+				ev.preventDefault();
 
-			$this.find('button').on('click', function(ev)
+				var $this = $(this),
+					val = $input.val(),
+					step = attrDefault($this, 'step', $this[0] == $minus[0] ? -100 : 100);
+
+				if( ! step.toString().match(/^[0-9-\.]+$/))
+				{
+					step = $this[0] == $minus[0] ? -1 : 1;
+				}
+
+				if( ! val.toString().match(/^[0-9-\.]+$/))
+				{
+					val = 0;
+				}
+
+				$input.val( parseFloat(val) + step ).trigger('keyup');
+			});
+			/* button one */
+
+
+			/* button two */
+			$this.find('.button_two').on('click', function(ev)
 			{
 				ev.preventDefault();
 
@@ -1380,6 +1423,11 @@ var public_vars = public_vars || {};
 
 				$input.val( parseFloat(val) + step ).trigger('keyup');
 			});
+			/* button two */
+
+
+
+
 
 			$input.keyup(function()
 			{
@@ -1396,6 +1444,35 @@ var public_vars = public_vars || {};
 			});
 
 		});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 		// Search Results Tabs
@@ -1776,7 +1853,7 @@ function attrDefault($el, data_var, default_val)
 {
 	if(typeof $el.data(data_var) != 'undefined')
 	{
-		return $el.data(data_var);
+		return $el.data(data_var) + 100;
 	}
 
 	return default_val;

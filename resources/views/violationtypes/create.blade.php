@@ -24,135 +24,157 @@
             <div class="panel-body">
 
                 <div class="panel-body">
+
+
 						
-		                       <form role="form" id="formCreate" class="form-horizontal form-groups-bordered" action="{{ url('/admin/violationtype') }}" method="post">
-			
-				<input type="hidden" name="_token" value="{{ csrf_token() }}" />
+               <form role="form" id="formCreate" class="form-horizontal form-groups-bordered" action="{{ url('/admin/violationtype') }}" method="post">
 
-				<div class="form-group">
-					<label for="field-4" class="col-sm-3 control-label">{{trans('violationtype.name')}}</label>
-					<div class="col-sm-5">
-						<input type="text" class="form-control" id="field-4" name="name" placeholder="اسم المخالفه" value="{{ old('name') }}">
-					@if ($errors->has('name'))
-                        <span class="help-block">
-                            <strong>{{trans('violationtype.required')}}</strong>
-                         </span>
-                    				@endif
-								</div>
-							</div>
+<input type="hidden" name="_token" value="{{ csrf_token() }}" />
 
-							<div class="form-group">
-								<label for="field-4" class="col-sm-3 control-label">{{trans('violationtype.description')}}</label>
-								<div class="col-sm-5">		
-							<textarea class="form-control pull-right" id="field-4" name="desc" placeholder="وصف المخالفه">
-										{{ old('desc') }}
-									</textarea>
-									@if ($errors->has('desc'))
-			                        <span class="help-block">
-			                            <strong>{{ $errors->first('desc') }}</strong>
-                                        </span>
-                    				@endif
-								</div>
-							</div>
-
-							<div class="form-group">
-								<label class="col-sm-3 control-label">{{trans('violationtype.amount')}}</label>
-								
-								<div class="col-sm-5">
-									
-									<!-- Spinner Markup -->
-									<div class="input-spinner">
-										<button type="button" class="btn btn-default">-</button>
-										<input type="text" name="amount" class="form-control size-1" value="{{ old('amount') }}" />
-										<button type="button" class="btn btn-default">+</button>
-									</div> 
-									<span style="padding-bottom: 20px;"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ريال سعودى</span>
-						                                     @if ($errors->has('amount'))
-			                        <span class="help-block">
-			                            <strong>{{trans('violationtype.number')}}</strong>
-                                        </span>
-                    				@endif
-								</div>
-							</div>
-
-							<div class="form-group">
-								<label class="col-sm-3 control-label">{{trans('violationtype.max_amount')}}</label>
-								
-								<div class="col-sm-5">
-									
-									<!-- Spinner Markup -->
-									<div class="input-spinner">
-										<button type="button" class="btn btn-default">-</button>
-										<input type="text" name="max_amount" class="form-control size-1" value="{{ old('max_amount') }}" />
-										<button type="button" class="btn btn-default">+</button>
-									</div>
-									<span style="padding-bottom: 20px;"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ريال سعودى</span>
-
-									@if ($errors->has('max_amount'))
-			                        <span class="help-block">
-			                            <strong>{{trans('violationtype.number')}}</strong>
-                                        </span>
-                    				@endif
-								</div>
-							</div>
-
-							<div class="form-group">
-								<label class="col-sm-3 control-label">{{trans('violationtype.min_amount')}}</label>
-								
-								<div class="col-sm-5">
-									
-									<!-- Spinner Markup -->
-									<div class="input-spinner">
-										<button type="button" class="btn btn-default">-</button>
-										<input type="text" name="min_amount" class="form-control size-1" value="{{ old('min_amount') }}" />
-										<button type="button" class="btn btn-default">+</button>
-									</div>
-									<span style="padding-bottom: 20px;"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ريال سعودى</span>
-
-									@if ($errors->has('min_amount'))
-			                        <span class="help-block">
-			                            <strong>{{trans('violationtype.number')}}</strong>
-                                        </span>
-                    				@endif
-								</div>
-							</div>
-
-							<div class="form-group">
-								<label class="col-sm-3 control-label">{{trans('violationtype.duration')}}</label>
-								
-								<div class="col-sm-5">
-									
-									<!-- Spinner Markup -->
-									<div class="input-spinner">
-										<button type="button" class="btn btn-default">-</button>
-										<input type="text" name="duration" class="form-control size-1" value="{{ old('duration') }}" />
-										<button type="button" class="btn btn-default">+</button>
-									</div>
-									<span style="padding-bottom: 20px;"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;يوم</span>
-
-									@if ($errors->has('duration'))
-			                        <span class="help-block">
-			                            <strong>{{trans('violationtype.number')}}</strong>
-                                        </span>
-                    				@endif
-								</div>
-							</div>
-
-
-
-		<div class="form-group">
-			<label class="col-sm-3 control-label">{{trans('violationtype.service')}}</label>
-				<div class="col-sm-5">
-					<select name="service_id" class="selectboxit" id="parent">
-					@if(isset($services))
-						@foreach($services as $service)
-							<option value="{{ $service->id }}">{{ $service->name }}</option>
-						@endforeach
-					@endif
-						</optgroup>
-					</select>
+<div class="form-group">
+	<label for="field-4" class="col-sm-3 control-label">{{trans('violationtype.name')}}</label>
+	<div class="col-sm-5">
+		<input type="text" class="form-control" id="field-4" name="name" placeholder="اسم المخالفه" value="{{ old('name') }}">
+	@if ($errors->has('name'))
+        <span class="help-block">
+            <strong>{{trans('violationtype.required')}}</strong>
+         </span>
+    				@endif
 				</div>
-		</div>
+			</div>
+
+			<div class="form-group">
+				<label for="field-4" class="col-sm-3 control-label">{{trans('violationtype.description')}}</label>
+				<div class="col-sm-5">		
+			<textarea class="form-control pull-right" id="field-4" name="desc" placeholder="وصف المخالفه"></textarea>
+					@if ($errors->has('desc'))
+                    <span class="help-block">
+                        <strong>{{ $errors->first('desc') }}</strong>
+                        </span>
+    				@endif
+				</div>
+			</div>
+
+
+
+
+
+
+
+			<div class="form-group">
+				<label class="col-sm-3 control-label">{{trans('violationtype.amount')}}</label>
+				
+				<div class="col-sm-5">
+					
+					<!-- Spinner Markup -->
+					<div class="input-spinner">
+						<button type="button" class="btn btn-default button_one">-</button>
+						<input type="text" name="amount" class="form-control size-1" value="1000" />
+						<button type="button" class="btn btn-default button_one">+</button>
+					</div> 
+					<span style="padding-bottom: 20px;"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ريال سعودى</span>
+		                                     @if ($errors->has('amount'))
+                    <span class="help-block">
+                        <strong>{{trans('violationtype.number')}}</strong>
+                        </span>
+    				@endif
+				</div>
+			</div>
+
+
+
+
+
+
+
+			<div class="form-group">
+				<label class="col-sm-3 control-label">{{trans('violationtype.max_amount')}}</label>
+				
+				<div class="col-sm-5">
+					
+					<!-- Spinner Markup -->
+					<div class="input-spinner">
+						<button type="button" class="btn btn-default button_one">-</button>
+						<input type="text" name="max_amount" class="form-control size-1" value="2000" />
+						<button type="button" class="btn btn-default button_one">+</button>
+					</div>
+					<span style="padding-bottom: 20px;"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ريال سعودى</span>
+
+					@if ($errors->has('max_amount'))
+                    <span class="help-block">
+                        <strong>{{trans('violationtype.number')}}</strong>
+                        </span>
+    				@endif
+				</div>
+			</div>
+
+
+
+
+
+
+
+			<div class="form-group">
+				<label class="col-sm-3 control-label">{{trans('violationtype.min_amount')}}</label>
+				
+				<div class="col-sm-5">
+					
+					<!-- Spinner Markup -->
+					<div class="input-spinner">
+						<button type="button" class="btn btn-default button_one">-</button>
+						<input type="text" name="min_amount" class="form-control size-1" value="500" />
+						<button type="button" class="btn btn-default button_one">+</button>
+					</div>
+					<span style="padding-bottom: 20px;"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ريال سعودى</span>
+
+					@if ($errors->has('min_amount'))
+                    <span class="help-block">
+                        <strong>{{trans('violationtype.number')}}</strong>
+                        </span>
+    				@endif
+				</div>
+			</div>
+
+
+
+
+
+			<div class="form-group">
+				<label class="col-sm-3 control-label">{{trans('violationtype.duration')}}</label>
+				
+				<div class="col-sm-5">
+					
+					<!-- Spinner Markup -->
+					<div class="input-spinner">
+						<button type="button" class="btn btn-default button_two">-</button>
+						<input type="text" name="duration" class="form-control size-1" value="7" />
+						<button type="button" class="btn btn-default button_two">+</button>
+					</div>
+					<span style="padding-bottom: 20px;"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;يوم</span>
+
+					@if ($errors->has('duration'))
+                    <span class="help-block">
+                        <strong>{{trans('violationtype.number')}}</strong>
+                        </span>
+    				@endif
+				</div>
+			</div>
+
+
+
+<div class="form-group">
+<label class="col-sm-3 control-label">{{trans('violationtype.service')}}</label>
+<div class="col-sm-5">
+	<select name="service_id" class="selectboxit" id="parent">
+	@if(isset($services))
+		@foreach($services as $service)
+			<option value="{{ $service->id }}">{{ $service->name }}</option>
+		@endforeach
+	@endif
+		</optgroup>
+	</select>
+</div>
+</div>
 
 
 		<div class="form-group">

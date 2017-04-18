@@ -717,6 +717,7 @@ $(document).ready(function() {
 		});
 
 
+
 /*  start ajax */
 		
 		$('body').on('change','#contractor',function () {
@@ -785,9 +786,21 @@ $(document).ready(function() {
         },
         success: function(response) {
              
+             if (response.message == 'resQuars') {
+
+                 $('#productEditErrors').html('<div class="alert alert-danger">من فضلك اختر حي</div>'); //appending to a <div id="form-errors"></div> inside form       
+
+             }else if (response.message == 'contractor'){ 
+
+                 $('#productEditErrors').html('<div class="alert alert-danger">من فضلك اختر مقاول</div>'); //appending to a <div id="form-errors"></div> inside form       
+
+              }else {
+
             $('#applyFilter').html('اضافه مستخدم');
             $('#productEditErrors').html('<div class="alert alert-success">تمت الاضافه بنجاح</div>'); //appending to a <div id="form-errors"></div> inside form
             $('#formID')[0].reset();
+
+        }
 
         },
         error: function(error) {

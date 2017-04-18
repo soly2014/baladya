@@ -347,6 +347,9 @@ class ViolationsController extends Controller
 
 
 
+
+
+
     public function addSolution(App\Models\Violation $violation)
     {
 
@@ -355,7 +358,7 @@ class ViolationsController extends Controller
                 
              $violation->seen = 1;
              $violation->seen_by =  session('user_object')->id;
-             $violation->seen_at = Carbon::now()->toDayDateTimeString();
+             $violation->seen_at = Carbon::now();
              $violation->save();
 
        }

@@ -728,33 +728,38 @@
                     <div class="col-md-12">
                         <label for="field-4" class="col-sm-3 control-label">{{trans('violation.custom_penalty')}}</label>
                         <div class="col-sm-5">
-                            {{ $violation->custom_penalty }}
+                            {{ $violation->custom_penalty ? $violation->custom_penalty : '---------------' }}
                         </div>
                     </div>
 
-                    @if($violation->video)
                     <div class="col-md-12">
                         <label for="field-4" class="col-sm-3 control-label">{{trans('violation.video')}}</label>
                         <div class="col-sm-5">
+                            @if($violation->video)
                             <video width="320" height="240" controls>
                               <source src="{{$violation->video}}" type="video/mp4">
                               Your browser does not support the video tag.
                             </video>
+                            @else
+                             
+                            لا توجد ملفات فيديو لهذه المخالفه
+                            @endif        
                         </div>
                     </div>
-                    @endif
 
-                    @if($violation->audio)
-                    <div class="col-md-12">
+                     <div class="col-md-12">
                         <label for="field-4" class="col-sm-3 control-label">{{trans('violation.voice')}}</label>
                         <div class="col-sm-5">
+                            @if($violation->audio)
                             <audio width="320" height="240" controls>
                                <source src="{{$violation->audio}}" type="audio/mpeg">
                                Your browser does not support the audio element.
                             </audio>
+                            @else
+                            لا توجد ملفات صوت لهذه المخالفه
+                            @endif
                         </div>
                     </div>
-                    @endif
 
                    
 
@@ -766,7 +771,7 @@
                         <div class="row">
                             <div class="col-lg-12">
 
-
+                            @if(count($images) > 0)
                                 @foreach($images as $image)
                                 <div class="col-lg-3 col-md-4 col-xs-6 thumb">
                                     <a class="thumbnail" href="#" data-image-id="" data-toggle="modal" data-title="Im so nice" data-caption="And if there is money left, my girlfriend will receive this car" data-image="{{$image->image}}" data-target="#image-gallery">
@@ -774,6 +779,9 @@
                                     </a>
                                 </div>
                                 @endforeach
+                            @else
+                            لا توجد صور لهذه المخالفه
+                            @endif    
                             </div>
 
 
@@ -846,14 +854,10 @@
 @if($violation->seen == 1)
 <div class="row">
     <div class="col-md-12">
-        <div class="panel panel-default panel-shadow" data-collapsed="0"><!-- to apply shadow add class "panel-shadow" -->
+        <div class="panel panel-warning panel-shadow" data-collapsed="0"><!-- to apply shadow add class "panel-shadow" -->
             <div class="panel-heading">
                 <div class="panel-title">
-                    @if(session('user_role')!='moderator')
-                            {{trans('solution.singlesolution')}}</button>
-                    @else
-                            {{trans('solution.comment')}}
-                    @endif
+                    تنبيه
                 </div>
             </div>
             <!-- panel body -->
@@ -861,14 +865,34 @@
                 <div class="panel-body">
                     <div class="col-md-3">
                         <h4 class="col-sm-12 control-label"><i class="entypo-user"></i>
+
+                    <?php
+                    $user = \App\Models\User::find($violation->seen_by);
+
+                    if ($user) {
+                    $user = $user->contractor_id;
+
+                    $user = \App\Models\User::find($user);
+
+                        if(\App\Models\User::where('id','=',$user->id)->first()){
+                            $name = \App\Models\User::where('id','=',$user->id)->first()->first_name.' '.App\Models\User::where('id','=',$user->id)->first()->last_name ;
+                        }
+                    }else {
+
+                            $name = '--------';
+                        }
+
+                    
+                     ?>
+                     {{ $name }}
                         </h4>
-                        <h5 class="col-sm-12 control-label"><i class="entypo-clock"></i>
+                        <h5 class="col-sm-12 control-label">
 
                         </h5>
                     </div>
 
                     <div class="col-md-5">
-                        <label class="col-sm-3 control-label">{{trans('solution.comment')}}</label>
+                        <label class="col-sm-3 control-label">تنبيه</label>
                         <div class="col-sm-5">
                         تم استلام المخالفه وعليك البدا بالحل الان
                         </div>
@@ -876,6 +900,10 @@
 
                     <div class="col-md-4">
                          
+                        <label class="col-sm-3 control-label">تاريخ استلام المخالفه</label>
+                        <div class="col-sm-5">
+                        {{ $violation->seen_at }}
+                        </div>
                         
                         <div class="col-sm-5">
 
@@ -901,6 +929,7 @@
 
 
 
+@if($violation->violation_status_id != 1)
 
 @foreach($solutions as $solution)
 <div class="row">
@@ -996,13 +1025,15 @@
 
 
 
+
+
 <div class="row">
     <div class="col-md-12">
 
         <div class="panel panel-default panel-shadow" data-collapsed="0"><!-- to apply shadow add class "panel-shadow" -->
             <div class="panel-heading">
                 <div class="panel-title">
-<!-- admin -->
+                   <!-- admin -->
                     @if(session('user_role') != 'moderator'  && session('user_role') != 'manager'  )
 
                                     {{ trans('solution.create_solution') }}
@@ -1069,13 +1100,13 @@
                         <div class="form-group">
                             <div class="col-sm-offset-3 col-sm-5">
                                 <button type="submit" id="applyFilter" class="btn btn-primary"><i class="entypo-login"></i>
-                    @if(session('user_role') != 'moderator'  && session('user_role') != 'manager'  )
+                                        @if(session('user_role') != 'moderator'  && session('user_role') != 'manager'  )
 
-                                    {{ trans('solution.create_solution') }}
+                                                        {{ trans('solution.create_solution') }}
 
-                    @else
-                                    {{ trans('solution.create_comment') }}
-                    @endif
+                                        @else
+                                                        {{ trans('solution.create_comment') }}
+                                        @endif
                                 </button>
                             </div>
                         </div>
@@ -1088,6 +1119,10 @@
 
     </div>
 </div>
+@else
+<h2 class="text-center">اضغط على زر بدء العمل بالاعلى لكى تتمكن من التعليق</h2>
+@endif
+
 
 
 

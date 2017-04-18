@@ -63,10 +63,12 @@
 				
 				<!-- Spinner Markup -->
 				<div class="input-spinner">
-					<button type="button" class="btn btn-default">-</button>
+					<button type="button" class="btn btn-default button_one">-</button>
 					<input type="text" name="amount" class="form-control size-1" value="{{ old('amount')?:$violationType->amount }}" />
-					<button type="button" class="btn btn-default">+</button>
+					<button type="button" class="btn btn-default button_one">+</button>
 				</div>
+				<span style="padding-bottom: 20px;"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ريال سعودى</span>
+
 				@if ($errors->has('amount'))
                 <span class="help-block">
                     <strong>{{trans('violationtype.number')}}</strong>
@@ -82,10 +84,12 @@
 				
 				<!-- Spinner Markup -->
 				<div class="input-spinner">
-					<button type="button" class="btn btn-default">-</button>
+					<button type="button" class="btn btn-default button_one">-</button>
 					<input type="text" name="max_amount" class="form-control size-1" value="{{ old('max_amount')?:$violationType->max_amount }}" />
-					<button type="button" class="btn btn-default">+</button>
+					<button type="button" class="btn btn-default button_one">+</button>
 				</div>
+				<span style="padding-bottom: 20px;"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ريال سعودى</span>
+
 				@if ($errors->has('max_amount'))
                 <span class="help-block">
                     <strong>{{trans('violationtype.number')}}</strong>
@@ -101,10 +105,12 @@
 				
 				<!-- Spinner Markup -->
 				<div class="input-spinner">
-					<button type="button" class="btn btn-default">-</button>
+					<button type="button" class="btn btn-default button_one">-</button>
 					<input type="text" name="min_amount" class="form-control size-1" value="{{ old('min_amount')?:$violationType->min_amount }}" />
-					<button type="button" class="btn btn-default">+</button>
+					<button type="button" class="btn btn-default button_one">+</button>
 				</div>
+				<span style="padding-bottom: 20px;"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ريال سعودى</span>
+
 				@if ($errors->has('min_amount'))
                 <span class="help-block">
                     <strong>{{trans('violationtype.number')}}</strong>
@@ -120,10 +126,12 @@
 				
 				<!-- Spinner Markup -->
 				<div class="input-spinner">
-					<button type="button" class="btn btn-default">-</button>
+					<button type="button" class="btn btn-default button_two">-</button>
 					<input type="text" name="duration" class="form-control size-1" value="{{ old('duration')?:$violationType->duration }}" />
-					<button type="button" class="btn btn-default">+</button>
+					<button type="button" class="btn btn-default button_two">+</button>
 				</div>
+				<span style="padding-bottom: 20px;"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; يوم</span>
+
 				@if ($errors->has('duration'))
                 <span class="help-block">
                     <strong>{{trans('violationtype.number')}}</strong>

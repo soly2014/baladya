@@ -66,7 +66,6 @@ class ViolationTypesController extends Controller
 
     public function create()
     {
-
        
         $title = trans('violationtype.violationtype').'|'.trans('violationtype.create_violationtype');
         $services = Service::all();
@@ -74,6 +73,8 @@ class ViolationTypesController extends Controller
 
         return view('violationtypes.create',compact('services','health_envs','title'));
     }
+
+
 
     /**
      * Store a newly created resource in storage.
@@ -84,13 +85,20 @@ class ViolationTypesController extends Controller
      */
     public function store(Request $request)
     {
+
+
+
         $this->validate($request, [
+
             'name' => 'required',
+            'desc' => 'required',
             'duration'=>'required|numeric',
             'amount'=>'required|numeric',
             'max_amount'=>'required|numeric',
             'min_amount'=>'required|numeric',
+
         ]);
+
 
         try {
 

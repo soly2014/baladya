@@ -141,6 +141,34 @@ class UsersController extends Controller
 
 
 
+        if ($request->role_id == 3 || $request->role_id == 4) {
+            
+            if (count($request->resQuars) == 0 ) {
+                
+                return response()->json(['message'=>'resQuars']);
+            }
+
+        }
+
+
+
+      if ($request->role_id == 5 ) {
+
+                if (count($request->contractor_id) == null) {
+                    
+                    return response()->json(['message'=>'contractor']);
+                }
+
+   
+            if (count($request->resQuars) == 0 ) {
+                
+                return response()->json(['message'=>'resQuars']);
+            }
+
+        }
+
+
+
 
         try {
 
@@ -181,6 +209,7 @@ class UsersController extends Controller
 
             /*  storing in contractor_res_quar table */
             if ($roleId == 4) {
+
               if (count($request->resQuars) > 0) {
 
                   foreach ($request->resQuars as $key => $value) {
