@@ -963,7 +963,7 @@ $(document).ready(function () {
 
         $('.modal').on('click', function(event) {
             /* Act on the event */
-           // modal.css('display','none');
+            modal.css('display','none');
         });
 
         

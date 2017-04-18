@@ -181,11 +181,13 @@ class UsersController extends Controller
 
             /*  storing in contractor_res_quar table */
             if ($roleId == 4) {
-                    
-              foreach ($request->resQuars as $key => $value) {
+              if (count($request->resQuars) > 0) {
 
-                        \App\UserContractorDistricts::insert(['res_quar_id'=>$value,'contractor_id'=>$userObj->id]);
-               }      
+                  foreach ($request->resQuars as $key => $value) {
+
+                            \App\UserContractorDistricts::insert(['res_quar_id'=>$value,'contractor_id'=>$userObj->id]);
+                   }      
+              }      
 
             }
             /* ens storing in contractor_res_quar */
@@ -384,14 +386,24 @@ class UsersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request,$id)
     {
         $this->repository->delete($id);
+
+        if ($request->ajax()) {
+            
+            if (count(\App\Models\User::where('contractor_id',$id)->get()) > 0) {
+            \App\Models\User::where('contractor_id',$id)->delete();
+            }
+        }
+
         Session::flash('success','تم الحذف');
 
         return redirect()->back();
 
     }
+
+
 
     public function updatePassword(Request $request)
     {

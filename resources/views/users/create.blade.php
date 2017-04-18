@@ -632,7 +632,7 @@
 
 
 
-	<div class="form-group" id='resdiv'>
+	<div class="form-group" id='resdiv' style="display: none;">
 		<label class="col-sm-3 control-label">الاحياء</label>
 
 		<div class="col-sm-5">
@@ -704,6 +704,16 @@ $(document).ready(function() {
 			             $("#selectedres").html(non);
 
 			}
+
+
+                                if($('#role').val() == 1 || $('#role').val() == 2){
+
+                                    $('#resdiv').css('display', 'none');
+                                }
+                                else{
+                                    $('#resdiv').css('display', 'block');
+                                }
+
 		});
 
 
