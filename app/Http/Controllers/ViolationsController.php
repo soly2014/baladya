@@ -19,6 +19,9 @@ use Session;
 use Illuminate\Routing\Route;
 use Illuminate\Support\Facades\Input;
 use App\Models\ViolationStatus;
+use Carbon\Carbon;
+
+
 class ViolationsController extends Controller
 {
 
@@ -169,18 +172,20 @@ class ViolationsController extends Controller
             $violation->latitude = $inputs['latitude'];
 
 
+
             /////video 
             $videoPath='';
-            if(Session::has('violation_video'))
+            if(Session::get('violation_video') != '')
             {
                 $videoPath =  '/assets/images/videos/'.Session::get('violation_video');
             }
             $violation->video = $videoPath;
             /* end video */
 
+
             /* voice */
             $voicePath='';
-            if(Session::has('violation_voice'))
+            if(Session::get('violation_voice') != '')
             {
                 $voicePath =  '/assets/images/voices/'.Session::get('violation_voice');
             }
@@ -346,9 +351,11 @@ class ViolationsController extends Controller
     {
 
 
-       if (session('user_role') == 'contra_moderator') {
+       if (session('user_role') == 'contra_moderator' && $violation->seen == 0) {
                 
              $violation->seen = 1;
+             $violation->seen_by =  session('user_object')->id;
+             $violation->seen_at = Carbon::now()->toDayDateTimeString();
              $violation->save();
 
        }
@@ -402,8 +409,13 @@ class ViolationsController extends Controller
         return redirect()->back()->with('message', trans('violation.deleted'));
     }
     
+
+
+
+    /*  change vio status */
     function change_status(Request $request)
     {
+
         $id = $request->get('id');
         $new_status = $request->get('new_status');
         $statuses = 
@@ -414,7 +426,9 @@ class ViolationsController extends Controller
             $statuses = ViolationStatus::all()->pluck('id')->toArray();
             if(in_array($new_status, $statuses))
             {
+
                 $violation->update(['violation_status_id'=>$new_status]);
+
                 $status = ViolationStatus::find($new_status)->name;
 
                 $solution = new App\Solution();
@@ -430,6 +444,9 @@ class ViolationsController extends Controller
             }
         }
     }
+
+
+
 
     public function addPenalty(Request $request)
     {

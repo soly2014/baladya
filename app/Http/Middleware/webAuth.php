@@ -24,7 +24,7 @@ class webAuth
             }
             else
             {
-                return redirect()->guest('user/login');
+                return redirect()->guest('user/login/0');
             }
         }
 

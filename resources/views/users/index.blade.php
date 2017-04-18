@@ -26,10 +26,12 @@
 					<td>{{ $user->first_name.' '.$user->last_name }}</td>
 					<td>{{ $user->email }}</td>
 					<td>
-					@if($user->user_id)
-					@if(App\Models\User::where('id','=',$user->user_id)->first())
-						{{App\Models\User::where('id','=',$user->user_id)->first()->first_name.' '.App\Models\User::where('id','=',$user->user_id)->first()->last_name}}
+					@if($user->contractor_id != null)
+					@if(App\Models\User::where('id','=',$user->contractor_id)->first())
+						{{App\Models\User::where('id','=',$user->contractor_id)->first()->first_name.' '.App\Models\User::where('id','=',$user->contractor_id)->first()->last_name}}
 					@endif
+					@else
+					----------
 					@endif
 					</td>
 

@@ -74,17 +74,29 @@ class UsersController extends Controller
         $resQuars = ResQuar::all();
         $companies = Company::all();
         $contractors = Role::find(4)->users;
+
         $roles = Role::all();
 
-       $first_contractor = $contractors[0]->id;
-        $first_squars = User::find($first_contractor)->resQuars;
+        $contractor_id = DB::table('contractor_res_quar')->get()[0]->contractor_id;
+        $contractor_districts = DB::table('contractor_res_quar')
+                                                  ->where('contractor_id',$contractor_id)
+                                                  ->pluck('res_quar_id');
+//dd(DB::table('contractor_res_quar')->get()[0]->contractor_id);
+        $first_squars = \App\Models\ResQuar::whereIn('id',$contractor_districts)->get();
 
-        $li = view('soly.squ',compact('first_squars'))->render();
-        $lis = view('soly.squ',compact('resQuars'))->render();
+
+
+      //  dd($contractors[0]->id);
+      //// $first_contractor = $contractors[0]->id;
+     //   $first_squars = User::find($first_contractor)->resQuars;
+
+        $li    = view('soly.squ',compact('first_squars'))->render();
+        $lis   = view('soly.squ',compact('resQuars'))->render();
 
         $title = trans('users.users'). '|' .trans('users.create_user');
 
         return view('users.create',compact('title','li','lis', 'services','resQuars','roles','companies','contractors'));
+
     }
 
 
@@ -99,6 +111,7 @@ class UsersController extends Controller
      */
     public function store(Request $request)
     {
+
 
         // dd($request->all());
         $messages =[
@@ -127,59 +140,105 @@ class UsersController extends Controller
         ],$messages);
 
 
+
+
         try {
 
             $this->validator->with($request->all())->passesOrFail(ValidatorInterface::RULE_CREATE);
 
             $inputs =$request->all();
-            $inputs['password'] = bcrypt($request->password);
-            if($inputs['contractor_id']=='')
-                $inputs['contractor_id']=null;
 
-           // $user = $this->repository->create($inputs);
+            $inputs['password'] = bcrypt($request->password);
+
+
+            if(!isset($inputs['contractor_id']))
+
+                $inputs['contractor_id'] = null;
+
+
+
             $user = new User();
+
             foreach ($inputs as $key=>$value){
                 if ($key != '_token' && $key !='role_id'&& $key !='resQuars') {
 
                     $user[$key] = $value;
                 }
             }
+
+            // storing user
             $user->save();
 
             $roleId=$request->get('role_id');
+
+            // object from this user
             $userObj= User::find($user->id);
+
+            // attach user roles in [ role_user ]
             $userObj->roles()->attach($roleId);
+
+
+
+            /*  storing in contractor_res_quar table */
+            if ($roleId == 4) {
+                    
+              foreach ($request->resQuars as $key => $value) {
+
+                        \App\UserContractorDistricts::insert(['res_quar_id'=>$value,'contractor_id'=>$userObj->id]);
+               }      
+
+            }
+            /* ens storing in contractor_res_quar */
+
+
+
+            // srote in activation table
             $activation = Activation::create($user);
 
             Activation::complete($user, $activation->code);
+
+
+            // store in table [ res_quar_user ]
             if($request->has('resQuars'))
-            $userObj->resQuars()->attach($request->get('resQuars'));
+
+                $userObj->resQuars()->attach($request->get('resQuars'));
+
+
+
+
 
             $response = [
                 'message' => trans('users.created'),
                 'data'    => $user->toArray(),
             ];
 
+
+
+
+
             if ($request->wantsJson()) {
 
                 return response()->json($response);
             }
+
             Session::flash('success',trans('dashboard.created'));
 
-
-
-
-
             return redirect()->back()->with('ok', $response['message']);
+
+
         } catch (ValidatorException $e) {
+
             if ($request->wantsJson()) {
+
                 return response()->json([
                     'error'   => true,
                     'message' => $e->getMessageBag()
                 ]);
+
             }
 
             return redirect()->back()->withErrors($e->getMessageBag())->withInput();
+
         }
     }
 

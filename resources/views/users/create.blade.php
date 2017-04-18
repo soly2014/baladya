@@ -617,8 +617,9 @@
 		<div class="col-sm-5">
 
 			<select name="contractor_id" class="select2" id="contractor">
-
+			<option disabled value="اختار  مقاول"  selected>اختار  مقاول</option>
 				@foreach($contractors as $contractor)
+
 				<option value="{{ $contractor->id }}">{{$contractor->first_name.' '.$contractor->last_name}}</option>
 				@endforeach
 			</select>
@@ -707,9 +708,6 @@ $(document).ready(function() {
 
 
 /*  start ajax */
-
-
-
 		
 		$('body').on('change','#contractor',function () {
 
@@ -727,18 +725,15 @@ $(document).ready(function() {
 			    success:function (data) {
 
 
-/*			    	if (data == 'false') {
+			    	if (data.html == 'false') {
 
-			    	     $("#StreetsContainer").hide();
-			    	     $("#Streets").html('لا توجد شوارع لهذا الحي');
+			                 $("#selectedres").html(' ');
 
 			    	} else {
 
-			    	     $("#StreetsContainer").show();
-			    	     $("select[name='street_id'").html(' ');		
-			    	     $("select[name='street_id'").html(data.view);		
+			                 $("#selectedres").html(data.html);
 
-			    	}*/
+			    	}
 
 			    },
 			    error:function (errorres_quar_id) {

@@ -12,7 +12,7 @@
 					<th data-hide="phone">{{trans('violation.code')}}</th>
 					<th data-hide="phone">{{trans('violation.custom_penalty')}}</th>
 					<th data-hide="phone">{{trans('violation.violation_status')}}</th>
-					<th data-hide="phone">{{trans('users.contractor')}}</th>
+					<th data-hide="phone">اسم الحي</th>
 					<th>{{trans('violation.actions')}}</th>
 					
 				</tr>
@@ -29,11 +29,14 @@
 						@endif
 					</td>
 					<td>
+
 					@if($violation->user_id)
-					@if(App\Models\User::where('id','=',$violation->user_id)->first())
-						{{App\Models\User::where('id','=',$violation->user_id)->first()->first_name.' '.App\Models\User::where('id','=',$violation->user_id)->first()->last_name}}
+
+					@if(App\Models\ResQuar::where('id','=',$violation->res_quar_id)->first())
+						{{App\Models\ResQuar::where('id','=',$violation->res_quar_id)->first()->name }}
 					@endif
 					@endif
+
 					</td>
 					
 

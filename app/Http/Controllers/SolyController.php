@@ -7,6 +7,7 @@ use App\Models\Street;
 use Session;
 use App\Models\ViolationImage;
 use App\Models\Violation;
+use DB;
 
 
 
@@ -58,11 +59,21 @@ public function getSquares(Request $request)
 
         if ($request->ajax()) {
 
-            $id = $request->id;
-            $squars = \App\Models\ResQuar::find($id);
+            $contractor_id = $request->id;
+            $contractor_districts = DB::table('contractor_res_quar')->where('contractor_id',$contractor_id)->pluck('res_quar_id');
 
-          //  return response()->json(['long'=>46.682558 , 'lat'=>24.632028]);
-            return response()->json(['long'=>$squars->long , 'lat'=>$squars->lat]);
+            $resQuars = \App\Models\ResQuar::whereIn('id',$contractor_districts)->get();
+            $lis = view('soly.squ',compact('resQuars'))->render();
+            if (count($resQuars) > 0) {
+
+            return response()->json(['html'=>$lis]);
+
+            } else {
+
+            return response()->json(['html'=>'false']);
+
+            }
+
         }
 
 

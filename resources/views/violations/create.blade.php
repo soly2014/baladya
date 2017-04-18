@@ -398,6 +398,7 @@ Dropzone.autoDiscover = false;
         },
         success: function(response) {
              
+
             $('#applyFilter').html('اضافه  مخالفه');
             $('#productEditErrors').html('<div class="alert alert-success">تمت الاضافه بنجاح</div>'); //appending to a <div id="form-errors"></div> inside form
             Dropzone.forElement("#my-awesome-dropzone").removeAllFiles(true);
@@ -416,6 +417,8 @@ Dropzone.autoDiscover = false;
 
 
  ?>
+
+ 	window.location.href = "{{ url('admin/violation') }}";
 
 
         },

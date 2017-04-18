@@ -44,6 +44,7 @@ class User extends CartalystUser {
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function roles() {
+        
         return $this->belongsToMany(Role::class,'role_user');
     }
 
@@ -63,6 +64,7 @@ class User extends CartalystUser {
      * @return \Illuminate\Database\Eloquent\Relations\hasMany
      */
     public function resQuars() {
+        
         return $this->belongsToMany(ResQuar::class);
     }
 

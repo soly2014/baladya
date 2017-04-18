@@ -562,6 +562,7 @@
                     <input type="hidden" name="_token" value="{{ csrf_token() }}" />
 
 
+
                     @if($violation->status['id'] == $statuses['new']   &&  session('user_role') != 'manager')
                     <div class="col-md-2" id='running'>
                         <input type="button" value="{{trans('violation.start')}}" class="change_status btn btn-primary" name="start_work"
@@ -574,25 +575,45 @@
                                status="{{$statuses['waiting']}}"/>
                     </div>                         
 
+
                     @elseif($violation->status['id'] == $statuses['waiting'] && (Sentinel::getUser()->roles[0]->slug =='admin' || Sentinel::getUser()->roles[0]->slug =='manager'))
-                    <div class="col-md-2" id="accepted">
-                        <input type="button" value="{{trans('violation.accept')}}" class="change_status btn btn-primary" name="accept_solution"
-                               status="{{$statuses['accepted']}}"/>
-                    </div>                     
-                    <div class="col-md-2" id="rejected">
-                        <input type="button" value="{{trans('violation.reject')}}" class="change_status btn btn-primary" name="reject_solution"
-                               status="{{$statuses['rejected']}}"/>
-                    </div>
+
+
+                        <!-- check if violation accepted -->
+                        @if(Sentinel::getUser()->roles[0]->slug =='moderator'  && $violation->status['id'] != $statuses['accepted'])
+
+                            <div class="col-md-2" id="accepted">
+                                <input type="button" value="{{trans('violation.accept')}}" class="change_status btn btn-primary" name="accept_solution"
+                                       status="{{$statuses['accepted']}}"/>
+                            </div>                     
+                            <div class="col-md-2" id="rejected">
+                                <input type="button" value="{{trans('violation.reject')}}" class="change_status btn btn-primary" name="reject_solution"
+                                       status="{{$statuses['rejected']}}"/>
+                            </div>
+                        @endif
+                        <!-- end check if vio accepted -->
+
+
                     @endif 
 
 
                     @if((Sentinel::getUser()->roles[0]->slug =='admin'||Sentinel::getUser()->roles[0]->slug =='manager')  && $violation->status['id'] != $statuses['finished'])
-                    
-                    <div class="col-md-2" id='finish'>
-                        <input type="button" value="{{trans('violation.close')}}" class="change_status btn btn-primary" name="finish_work" id="finish_work"
-                               status="{{$statuses['finished']}}"/>
-                    </div>
+                   
+                        <!-- check if violation accepted -->
+                        @if(Sentinel::getUser()->roles[0]->slug =='moderator'  && $violation->status['id'] != $statuses['accepted'])
+                        <div class="col-md-2" id='finish'>
+                            <input type="button" value="{{trans('violation.close')}}" class="change_status btn btn-primary" name="finish_work" id="finish_work"
+                                   status="{{$statuses['finished']}}"/>
+                        </div>
+                        @endif
+                        <!-- end check if vio accepted -->
+
+
                     @endif
+
+
+
+
 
 
 
@@ -1073,6 +1094,7 @@
 
 <script>
     
+
     if(localStorage.getItem("message") != "")
      {
          $(".alert").removeClass('hidden');
@@ -1080,12 +1102,18 @@
          localStorage.setItem('message',"");
          setTimeout(function(){ $(".alert").addClass('hidden');},10000 );
      }
+
+
+
     $(".change_status").on('click', function () {
         var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('value');
         var id = $(".violation").attr('id');
         var status = $(this).attr('status');
         change_violation_status(id, status, CSRF_TOKEN);
     });
+
+
+
 
     function change_violation_status(id, new_status, token)
     {
@@ -1103,6 +1131,9 @@
             }
         });
     }
+
+
+
 
     $('#penalty').on('change', function(event) {
     	event.preventDefault();
